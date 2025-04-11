@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -32,61 +33,27 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Telegram theme variables will override when available */
+    --tg-bg-color: var(--background);
+    --tg-text-color: var(--foreground);
+    --tg-button-color: var(--primary);
+    --tg-button-text-color: var(--primary-foreground);
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+  .telegram-app {
+    background-color: var(--tg-theme-bg-color, hsl(var(--background)));
+    color: var(--tg-theme-text-color, hsl(var(--foreground)));
+  }
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+  .telegram-primary-button {
+    background-color: var(--tg-theme-button-color, hsl(var(--primary)));
+    color: var(--tg-theme-button-text-color, hsl(var(--primary-foreground)));
+  }
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+  .telegram-accent {
+    color: var(--tg-theme-link-color, #2481cc);
   }
 }
 
@@ -96,6 +63,91 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-['Inter',sans-serif];
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
+}
+
+/* Loading spinner animation */
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--tg-theme-button-color, #5c90ff);
+  animation: spinner 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+/* Result animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-animation {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Custom styles for the application */
+.app-container {
+  max-width: 100%;
+  width: 100%;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Set telegram-app class on root element for theme variables */
+#root {
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.result-card {
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.result-real {
+  border: 1px solid #4caf50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.result-fake {
+  border: 1px solid #f44336;
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.icon-real {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.icon-fake {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
 }
